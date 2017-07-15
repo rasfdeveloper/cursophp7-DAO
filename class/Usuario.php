@@ -78,6 +78,56 @@ class Usuario {
 
 	}
 
+	public static function getList()
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select("SELECT * FROM tb_usuarios ORDER BY des_login;");
+
+		return $result;
+
+	}
+
+	public static function search($login)
+	{
+
+		$sql = new Sql();
+
+		$result = $sql->select("SELECT * FROM tb_usuarios WHERE des_login LIKE :SEARCH ORDER BY des_login", array(
+			':SEARCH' => "%" .$login. "%"
+		));
+
+		return $result;
+
+	}
+
+	public function login($login, $pass)
+	{
+
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_usuarios WHERE des_login = :LOGIN AND des_senha = :PASS", array(
+				":LOGIN" => $login,
+				":PASS"  => $pass
+			));
+
+		if(count($results) > 0) { // ou if(isset(results[0]))
+
+			$row = $results[0];
+
+			$this->setIdusuario($row['id_usuario']);
+			$this->setDeslogin($row['des_login']);
+			$this->setDessenha($row['des_senha']);
+			$this->setDtcadastro(new DateTime($row['dt_cadastro']));
+	
+		} else {
+
+			throw new Exception("Login e/ou senha invalidos.");
+			
+
+		}
+	}
 }
 
  ?>
