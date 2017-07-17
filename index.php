@@ -28,4 +28,17 @@ $usuario->login("user","123456");
 echo $usuario;
 */
 
+//Criando um novo usuário
+/*
+$aluno = new Usuario("Renato","923801947");
+$aluno->insert();
+echo $aluno;
+*/
+
+$usuario = new Usuario();
+$usuario->loadbyId("8");
+$usuario->update("professor", "senhadoprofessor");
+
+echo $usuario;
+
  ?>
