@@ -144,10 +144,25 @@ class Usuario {
 		$sql = new Sql();
 
 		$sql->query("UPDATE tb_usuarios SET des_login = :LOGIN, des_senha = :PASSWORD WHERE id_usuario = :ID", array(
-				":LOGIN" => $this->getDeslogin(),
-				":PASSWORD" => $this->getDessenha(),
+				':LOGIN' => $this->getDeslogin(),
+				':PASSWORD' => $this->getDessenha(),
 				":ID" => $this->getIdusuario()
 			));
+
+	}
+
+	public function delete()
+	{
+
+		$sql  = new Sql();
+		$sql->query("DELETE FROM tb_usuarios WHERE id_usuario = :ID", array(
+			':ID' => $this->getIdusuario()
+		));
+
+		$this->setIdusuario(0);
+		$this->setDeslogin("");
+		$this->setDessenha("");
+		$this->setDtcadastro(new DateTime());
 
 	}
 
